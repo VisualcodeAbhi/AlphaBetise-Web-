@@ -1,0 +1,181 @@
+
+:root {
+    --bg-color: #050505;
+    --term-green: #00ff41;
+    --term-dim: #008f11;
+    --term-glow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--term-green);
+    font-family: 'VT323', monospace;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    height: 80vh;
+    border: 2px solid var(--term-dim);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 20px rgba(0, 143, 17, 0.2);
+    position: relative;
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+    z-index: 1;
+}
+
+/* CRT Scanline Effect */
+.container::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+header {
+    text-align: center;
+    border-bottom: 1px dashed var(--term-dim);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: var(--term-glow);
+    letter-spacing: 5px;
+}
+
+p {
+    margin: 5px 0 0;
+    opacity: 0.8;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    z-index: 3;
+}
+
+.input-section {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+label {
+    text-shadow: var(--term-glow);
+}
+
+input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--term-green);
+    color: var(--term-green);
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    width: 300px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    box-shadow: 0 4px 10px rgba(0, 255, 65, 0.2);
+    width: 320px;
+}
+
+button {
+    background: var(--term-green);
+    color: #000;
+    border: none;
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: #fff;
+    box-shadow: var(--term-glow);
+}
+
+.output-section {
+    flex: 1;
+    border: 1px solid var(--term-dim);
+    background: rgba(0, 20, 0, 0.3);
+    padding: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+pre {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    margin: 0;
+    text-shadow: var(--term-glow);
+    white-space: pre;
+    text-align: left;
+}
+
+footer {
+    border-top: 1px dashed var(--term-dim);
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    text-align: right;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #000;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--term-dim);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--term-green);
+}
+
+@media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    .input-section { flex-direction: column; }
+    input { width: 100%; }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaBetise - Name Printer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>>> ALPHABETISE.EXE << </h1>
+            <p>INITIALIZING ASCII ART GENERATOR_</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <label for="nameInput">ENTER NAME: </label>
+                <input type="text" id="nameInput" placeholder="TYPE HERE..." autocomplete="off">
+                <button id="generateBtn">EXECUTE</button>
+            </div>
+
+            <div class="output-section">
+                <div class="scanline"></div>
+                <pre id="artOutput"></pre>
+            </div>
+        </main>
+
+        <footer>
+            <p>SYSTEM READY.</p>
+        </footer>
+    </div>
+
+    <script>
+        const input = document.getElementById('nameInput');
+        const output = document.getElementById('artOutput');
+        const btn = document.getElementById('generateBtn');
+
+        async function fetchArt() {
+            const name = input.value;
+            if (!name) return;
+
+            output.innerHTML = "PROCESSING...";
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: name })
+                });
+
+                const data = await response.json();
+
+                // Typing effect? Maybe just simple display for now.
+                output.innerText = data.art;
+
+            } catch (e) {
+                output.innerText = "ERROR: CONNECTION FAILED";
+            }
+        }
+
+        btn.addEventListener('click', fetchArt);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') fetchArt();
+        });
+    </script>
+</body>
+
+</html>
