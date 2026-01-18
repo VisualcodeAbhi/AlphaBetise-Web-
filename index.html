@@ -245,13 +245,15 @@
                     body: JSON.stringify({ name: name })
                 });
 
-                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(`Server Error: ${response.status}`);
+                }
 
-                // Typing effect? Maybe just simple display for now.
+                const data = await response.json();
                 output.innerText = data.art;
 
             } catch (e) {
-                output.innerText = "ERROR: CONNECTION FAILED";
+                output.innerText = "ERROR: " + e.message;
             }
         }
 
